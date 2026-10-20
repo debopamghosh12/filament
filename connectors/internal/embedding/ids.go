@@ -6,15 +6,15 @@ import (
 	"github.com/google/uuid"
 )
 
-// Namespace is the fixed UUIDv5 namespace for Filament document IDs. It must
+// namespace is the fixed UUIDv5 namespace for Filament document IDs. It must
 // never change: every ID already written to a store is derived from it.
-var Namespace = uuid.NewSHA1(uuid.NameSpaceURL, []byte("https://filament.getgalaxy.io/embedding"))
+var namespace = uuid.NewSHA1(uuid.NameSpaceURL, []byte("https://filament.getgalaxy.io/embedding"))
 
 // DeterministicUUID maps any source key to a stable UUIDv5. The same key
 // always yields the same UUID, so upserts and deletes for a row address the
 // same point, and distinct keys such as "001" and "1" never collide.
 func DeterministicUUID(key string) uuid.UUID {
-	return uuid.NewSHA1(Namespace, []byte(key))
+	return uuid.NewSHA1(namespace, []byte(key))
 }
 
 // CanonicalUint64 reports whether key is the canonical base-10 form of an

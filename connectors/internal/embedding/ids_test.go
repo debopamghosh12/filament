@@ -17,6 +17,12 @@ func TestDeterministicUUID(t *testing.T) {
 	if embedding.DeterministicUUID("001") == embedding.DeterministicUUID("1") {
 		t.Fatal(`"001" and "1" produced the same UUID`)
 	}
+	// Every ID already written to a store depends on this value. If this
+	// assertion fails, the namespace or hashing changed, and existing points
+	// would no longer be found by upserts or deletes.
+	if got, want := a.String(), "383decf8-589e-55a7-8ee6-60443afdd702"; got != want {
+		t.Fatalf(`DeterministicUUID("user-abc") = %s, want %s`, got, want)
+	}
 }
 
 func TestCanonicalUint64(t *testing.T) {
